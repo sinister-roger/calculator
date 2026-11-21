@@ -23,3 +23,25 @@ let firstNumber;
 let secondNumber; 
 let operator; 
 
+function operate(firstNumber, secondNumber, operator) {
+    switch (operator) {
+        case "+": 
+            return add(firstNumber, secondNumber)
+        break; 
+        
+        case "-": 
+            return subtract(firstNumber, secondNumber)
+        break; 
+        
+        case "*": 
+            return multiply(firstNumber, secondNumber)
+        break; 
+        
+        case "/": 
+            return divide(firstNumber, secondNumber)
+        break; 
+
+    }
+}
+
+// console.log(operate(4,5,"/")); 
