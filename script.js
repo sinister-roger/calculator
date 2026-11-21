@@ -18,3 +18,8 @@ function divide(a,b) {
 // console.log(subtract(3,4));
 // console.log(multiply(3,4));
 // console.log(divide(3,4));
+
+let firstNumber; 
+let secondNumber; 
+let operator; 
+
