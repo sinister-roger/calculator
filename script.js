@@ -26,8 +26,13 @@ function operate(firstNumber, secondNumber, operator) {
         case "*": 
         return multiply(firstNumber, secondNumber)
         
-        case "/": 
-        return divide(firstNumber, secondNumber)
+        case "/":
+            if(secondNumber === 0) {
+                return "nice try! You can't divide by zero.";
+            } 
+            return divide(firstNumber, secondNumber)
+        default: 
+        return "invalid operator"; 
         
     }
 }
@@ -36,6 +41,7 @@ let firstNumber = ""
 let secondNumber = ""
 let operator = ""
 let result;
+let calculationfinished = false;
 
 
 const buttons = document.querySelectorAll(".number"); 
@@ -44,10 +50,16 @@ const opr = document.querySelectorAll(".operator");
 const clear = document.querySelector("#clear"); 
 const equal = document.querySelector("#equal")
 
-
 buttons.forEach((item) => {
     item.addEventListener("click", () => {
-        if (operator === "") {
+        if(calculationfinished) {
+            firstNumber ="";
+            secondNumber ="";
+            operator =""; 
+
+            calculationfinished =false; 
+        }
+         if (operator === "") {
             firstNumber += item.textContent;
             console.log(firstNumber)
             input.value = firstNumber;
@@ -64,12 +76,22 @@ buttons.forEach((item) => {
 opr.forEach((item) => {
     item.addEventListener("click", () => {
 
+        if (calculationfinished) {
+            firstNumber = result;
+            secondNumber = "";
+            calculationfinished = false;
+        }
         if (firstNumber !== "" && secondNumber !== "" && operator !== "") {
             firstNumber = operate(
                 Number(firstNumber),
                 Number(secondNumber),
                 operator
             );
+
+        if (typeof firstNumber !== "number") {
+            input.value =firstNumber;
+            return;
+        }
 
             secondNumber = "";
         }
@@ -81,14 +103,39 @@ opr.forEach((item) => {
 });
 
 clear.addEventListener("click", () => {
-    firstNumber =""
-    secondNumber =""
-    operator =""
-    input.value =""
+    
+        firstNumber =""
+        secondNumber =""
+        operator =""
+        result = undefined;
+        input.value =""
+        calculationfinished  = false; 
+
 })
 
 equal.addEventListener("click",() => {
-    result =operate(Number(firstNumber),Number(secondNumber),operator)
-    input.value = Math.round(result*100)/100;
 
-})
+    if(firstNumber !== "" && secondNumber !=="" && operator !== "") {
+        result =operate(
+            Number(firstNumber),
+            Number(secondNumber),
+            operator)
+
+    };
+    if (typeof result ==="number") {
+        input.value = Math.round(result*100)/100;
+        firstNumber = result; 
+        secondNumber ="";
+        operator ="";
+        
+        calculationfinished = true; 
+    } else {
+        input.value =result; 
+        firstNumber ="";
+        secondNumber ="";
+        operator ="";
+        result =undefined;
+        calculationfinished =false;
+    }
+
+});
