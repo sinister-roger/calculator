@@ -45,3 +45,15 @@ function operate(firstNumber, secondNumber, operator) {
 }
 
 // console.log(operate(4,5,"/")); 
+
+
+const buttons = document.querySelectorAll(".number"); 
+const input = document.querySelector("#display")
+
+buttons.forEach((item) => {
+    
+    item.addEventListener("click", () => {
+        input.value += item.textContent;
+    })
+    
+})
