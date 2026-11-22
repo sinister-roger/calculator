@@ -35,6 +35,7 @@ function operate(firstNumber, secondNumber, operator) {
 let firstNumber = "" 
 let secondNumber = ""
 let operator = ""
+let result;
 
 
 const buttons = document.querySelectorAll(".number"); 
@@ -49,31 +50,45 @@ buttons.forEach((item) => {
         if (operator === "") {
             firstNumber += item.textContent;
             console.log(firstNumber)
+            input.value = firstNumber;
         } else {
             secondNumber += item.textContent; 
             console.log(secondNumber)
+            input.value =secondNumber;
         }
+        
     })
     
 })
 
 opr.forEach((item) => {
     item.addEventListener("click", () => {
-        operator = item.textContent; 
-        console.log(operator)
-    })
-})
 
+        if (firstNumber !== "" && secondNumber !== "" && operator !== "") {
+            firstNumber = operate(
+                Number(firstNumber),
+                Number(secondNumber),
+                operator
+            );
+
+            secondNumber = "";
+        }
+
+        operator = item.textContent;
+        input.value = Math.round(firstNumber*100)/100;
+
+    });
+});
 
 clear.addEventListener("click", () => {
     firstNumber =""
     secondNumber =""
     operator =""
+    input.value =""
 })
 
 equal.addEventListener("click",() => {
-   firstNumber = +firstNumber;
-   secondNumber = +secondNumber;
-    let result =operate(firstNumber,secondNumber,operator)
-    input.value = result
+    result =operate(Number(firstNumber),Number(secondNumber),operator)
+    input.value = Math.round(result*100)/100;
+
 })
